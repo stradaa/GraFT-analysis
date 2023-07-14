@@ -6,11 +6,16 @@ function [dict_out, varargout] = GraFT(data_obj, dict_init, corr_kern, params)
 % re-weighted l1 spatial / graph filtering model.
 %
 % 2018 - Adam Charles, Gal Mishne
+% 2023 - Alex Estrada
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Input parsing
 
 params      = checkAllParameters(params);                                  % Check the input parameters valitidy
+if ~isempty(params.mask)                                                   % Set mask if present
+        [params, data_obj] = setMask(params, data_obj);
+end
+
 [M1,M2,T,N] = getProblemSizes(data_obj,dict_init,params);                  % Get some basic problem parameters (data size etc.)
 if T > 1                                                                   % If the array is given as an MxNxT array...
     data_obj     = reshape(data_obj,M1*M2,T);                              %   Reshape the data to be a matrix
@@ -220,10 +225,6 @@ function params = checkAllParameters(params)
     dParams.normalizeSpatial = false;                                      % default behavior - time-traces are unit norm. when true, spatial maps normalized to max one and time-traces are not normalized
     
     params = setParams(dParams, params);
-    
-    if ~isempty(params.mask)
-        [params.nRows, params.nCols] = size(params.mask);
-    end
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
