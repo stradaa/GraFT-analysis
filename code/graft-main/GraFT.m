@@ -13,7 +13,7 @@ function [dict_out, varargout] = GraFT(data_obj, dict_init, corr_kern, params)
 
 params      = checkAllParameters(params);                                  % Check the input parameters valitidy
 if ~isempty(params.mask)                                                   % Set mask if present
-        [params, data_obj] = setMask(params, data_obj);
+    [params, data_obj] = setMask(params, data_obj);
 end
 
 [M1,M2,T,N] = getProblemSizes(data_obj,dict_init,params);                  % Get some basic problem parameters (data size etc.)
