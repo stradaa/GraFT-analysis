@@ -1,22 +1,27 @@
 function [p, data_obj] = setMask(p, A)
 %SETMASK Mask relevant pixels
 %   Accepts multiple types of masks in various ways. Standardizes output to
-%   be a 2D matrix of mask_chosen_pixels x time within params.
+%   be a 2D matrix of mask_chosen_pixels x time within params. 
+%
+%   MASK OPTIONS:
+%       (1) - Binary mask - mask should be a 2D logical or binary mask 
+%               
+%       (2) - Pre-computed mask - 
 %
 %
 % :param p: Parameters used for running GraFT. Particularly of interest are
 %           fieldnames:
-%           - .mask : binary mask with desired pixels selected
-%                     type: logical / double
-%           - .nRows: S rows
-%                     type: double
-%           - .nCols: S cols
-%                     type: double
+%           - .mask : implements user selected mask options
+%                     type: logical / string
 % :type p: Struct
 %
-%
 % :returns: struct :p: Parameters with default mask field as a 2D matrix of
-%                 pixels x time.
+%                      mask_selected_pixels x time. Also adds two extra
+%                      fields responsible for tracking size of data_obj:
+%                       - .nRows: data object rows
+%                           type: double
+%                       - .nCols: data object columns
+%                           type: double
 %
 % PRE-COMPUTED OPTIONS
 % 'Sigma'    -  calculates the threshold based on the mean and standard 
